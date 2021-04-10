@@ -11,17 +11,37 @@
  *
  */
 
+const ListNode = require('../extensions/list-node');
+
 class Queue {
   get size() {
-    throw new Error('Not implemented');
+    let count = 0;
+    let node = this.head;
+    while (node) {
+      count++;
+      node = node.next;
+    }
+    return count;
   }
 
-  enqueue(/* element */) {
-    throw new Error('Not implemented');
+  enqueue(element) {
+    // Add new node as head node. If one is already exist then add reference
+    // to new node to the 'next' property of last available node
+    if (this.head) {
+      let node = this.head;
+      while (node.next) {
+        node = node.next;
+      }
+      node.next = new ListNode(element);
+    } else this.head = new ListNode(element);
   }
 
   dequeue() {
-    throw new Error('Not implemented');
+    // Copy head node value to return it as a result
+    // Change head reference to previous node
+    const lastNode = this.head.value;
+    this.head = this.head.next;
+    return lastNode;
   }
 }
 
