@@ -21,8 +21,35 @@
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new Error('Not implemented');
+function minesweeper(matrix) {
+  const result = [];
+
+  for (let row = 0; row < matrix.length; row++) {
+    result[row] = [];
+    for (let el = 0; el < matrix[row].length; el++) {
+      let count = 0;
+      // If current element of input matrix is 'true' - it's a bomb,
+      // always interpret it as '1'
+      if (matrix[row][el]) {
+        result[row].push(1);
+      }
+      // If current element is 'false' - count bombs in nearby cells
+      // and push value based on this number in result array
+      if (!matrix[row][el]) {
+        if (matrix[row - 1] && matrix[row - 1][el - 1]) count++;
+        if (matrix[row - 1] && matrix[row - 1][el]) count++;
+        if (matrix[row - 1] && matrix[row - 1][el + 1]) count++;
+        if (matrix[row][el - 1]) count++;
+        if (matrix[row][el + 1]) count++;
+        if (matrix[row + 1] && matrix[row + 1][el]) count++;
+        if (matrix[row + 1] && matrix[row + 1][el + 1]) count++;
+        if (matrix[row + 1] && matrix[row + 1][el - 1]) count++;
+
+        result[row].push(count);
+      }
+    }
+  }
+  return result;
 }
 
 module.exports = minesweeper;
