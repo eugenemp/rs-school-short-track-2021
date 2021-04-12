@@ -17,8 +17,23 @@
  * }
  */
 
-function removeKFromList(/* l, k */) {
-  throw new Error('Not implemented');
+function removeKFromList(l, k) {
+  let head = l;
+  // If first (aka head) node need to be deleted
+  // just move head reference to next node
+  while (head.value === k) {
+    head = head.next;
+  }
+  // If any other nested node needs to be deleted, link 'next'
+  // property of current node to the 'next' property of the
+  // node that follows the current one
+  let current = head;
+  while (current.next) {
+    if (current.next.value === k) {
+      current.next = current.next.next;
+    } else current = current.next;
+  }
+  return head;
 }
 
 module.exports = removeKFromList;
